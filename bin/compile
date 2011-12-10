@@ -3,6 +3,12 @@
 
 set -eo pipefail
 
+# config
+APACHE_VERSION="2.2.19"
+APACHE_PATH="apache"
+PHP_VERSION="5.3.6"
+PHP_PATH="php"
+
 BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
 ROOT_DIR=$(dirname $BIN_DIR)
 BUILD_DIR=$1
@@ -55,9 +61,43 @@ done
 echo "-----> Preparing virtualenv version $(virtualenv --version)"
 virtualenv --no-site-packages . | indent
 
+# unpack cache
+for DIR in $APACHE_PATH $PHP_PATH ; do
+  rm -rf $DIR
+  if [ -d $CACHE_DIR/$DIR ]; then
+    cp -r $CACHE_DIR/$DIR $DIR
+  fi
+done
+
+# install apache if needed
+if [ ! -d $APACHE_PATH ]; then
+  APACHE_URL="https://s3.amazonaws.com/php-lp/apache-$APACHE_VERSION.tar.gz"
+  echo "-----> Bundling Apache v$APACHE_VERSION"
+  curl --silent --max-time 60 --location $APACHE_URL | tar xz
+fi
+
+# update config files
+cp $LP_DIR/conf/httpd.conf $APACHE_PATH/conf
+
+cat >>boot.sh <<EOF
+sed -i 's/Listen 80/Listen '\$PORT'/' /app/apache/conf/httpd.conf
+for var in \`env|cut -f1 -d=\`; do
+  echo "PassEnv \$var" >> /app/apache/conf/httpd.conf;
+done
+touch /app/apache/logs/error_log
+touch /app/apache/logs/access_log
+tail -F /app/apache/logs/error_log &
+tail -F /app/apache/logs/access_log &
+export LD_LIBRARY_PATH=/app/php/ext
+export PHP_INI_SCAN_DIR=/app/www
+echo "Launching apache"
+exec /app/apache/bin/httpd -DNO_DETACH
+EOF
+
+chmod +x boot.sh
+
 # create set-aside .heroku folder.
 mkdir .heroku
-
 
 # if pylibmc within requirements, use vendored libmemcached
 if (grep -Fxiq "pylibmc" requirements.txt) || (grep -Fiq "pylibmc=" requirements.txt)
@@ -89,7 +129,9 @@ PROJECT=$(dirname $CONF_FILE)
 pushd $PROJECT
 make html
 popd
-  
+
+cp -R _build/html/* $CACHE_DIR/www/
+ 
 
 echo "-----> Installing dependencies using pip version $(bin/pip --version | awk '{print $2}')"
 PIP_DOWNLOAD_CACHE=$PIP_DOWNLOAD_CACHE bin/pip install --use-mirrors -r requirements.txt | indent
@@ -103,8 +145,9 @@ OUT=$(virtualenv --relocatable .)
 }
 set -e
 
-# store new artifacts in cache
-for dir in $VIRTUALENV_DIRS; do
-  rm -rf $CACHE_DIR/$dir
-  cp -R $dir $CACHE_DIR/
+# repack cache
+mkdir -p $CACHE_DIR
+for DIR in $APACHE_PATH ; do
+  rm -rf $CACHE_DIR/$DIR
+  cp -R $DIR $CACHE_DIR/$DIR
 done
