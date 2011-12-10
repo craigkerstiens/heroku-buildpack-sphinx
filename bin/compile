@@ -8,6 +8,7 @@ APACHE_VERSION="2.2.19"
 APACHE_PATH="apache"
 PHP_VERSION="5.3.6"
 PHP_PATH="php"
+LP_DIR=`cd $(dirname $0); cd ..; pwd`
 
 BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
 ROOT_DIR=$(dirname $BIN_DIR)
