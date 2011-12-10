@@ -129,11 +129,11 @@ CONF_FILE=$(find . -name 'conf.py' | head -1)
 PROJECT=$(dirname $CONF_FILE)
 pushd $PROJECT
 make html
-popd
-
 mkdir -p $CACHE_DIR/www
 cp -R _build/html/* $CACHE_DIR/www/
 mv $CACHE_DIR/www . 
+popd
+
 
 echo "-----> Installing dependencies using pip version $(bin/pip --version | awk '{print $2}')"
 PIP_DOWNLOAD_CACHE=$PIP_DOWNLOAD_CACHE bin/pip install --use-mirrors -r requirements.txt | indent
