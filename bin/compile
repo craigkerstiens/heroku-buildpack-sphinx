@@ -84,15 +84,11 @@ if (grep -Fiq "hg+" requirements.txt) then
   pip install sphinx
 fi
 
-# if Django, append settings
-if [ "$NAME" = "Python/Django" ]; then
-  echo "-----> Django settings injection"
-
-  CONF_FILE=$(find . -name 'conf.py' | head -1)
-  PROJECT=$(dirname $CONF_FILE)
-  pushd $PROJECT
-  make html
-  popd
+CONF_FILE=$(find . -name 'conf.py' | head -1)
+PROJECT=$(dirname $CONF_FILE)
+pushd $PROJECT
+make html
+popd
   
 
 echo "-----> Installing dependencies using pip version $(bin/pip --version | awk '{print $2}')"
