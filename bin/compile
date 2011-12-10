@@ -131,7 +131,7 @@ pushd $PROJECT
 make html
 popd
 
-cp $ROOT_DIR/src/mod_authn_google.so $APACHE_PATH/module
+cp $ROOT_DIR/src/mod_authn_google.so $APACHE_PATH/modules/
 
 mkdir -p $CACHE_DIR/www
 cp -R $PROJECT/_build/html/* $CACHE_DIR/www/
