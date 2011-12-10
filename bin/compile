@@ -78,7 +78,11 @@ then
     cd ..
 fi
 
-
+if (grep -Fiq "hg+" requirements.txt) then
+  PIP_DOWNLOAD_CACHE=$PIP_DOWNLOAD_CACHE bin/pip install --use-mirrors mercurial | indent
+  source bin/activate
+  pip install sphinx
+fi
 
 # if Django, append settings
 if [ "$NAME" = "Python/Django" ]; then
@@ -90,12 +94,6 @@ if [ "$NAME" = "Python/Django" ]; then
   make html
   popd
   
-
-
-if (grep -Fiq "hg+" requirements.txt) then
-  PIP_DOWNLOAD_CACHE=$PIP_DOWNLOAD_CACHE bin/pip install --use-mirrors mercurial | indent
-  source bin/activate
-fi
 
 echo "-----> Installing dependencies using pip version $(bin/pip --version | awk '{print $2}')"
 PIP_DOWNLOAD_CACHE=$PIP_DOWNLOAD_CACHE bin/pip install --use-mirrors -r requirements.txt | indent
