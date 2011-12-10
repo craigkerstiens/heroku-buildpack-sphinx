@@ -80,10 +80,10 @@ fi
 
 if (grep -Fiq "hg+" requirements.txt) then
   PIP_DOWNLOAD_CACHE=$PIP_DOWNLOAD_CACHE bin/pip install --use-mirrors mercurial | indent
-  source bin/activate
-  pip install sphinx
 fi
 
+source bin/activate
+pip install sphinx
 CONF_FILE=$(find . -name 'conf.py' | head -1)
 PROJECT=$(dirname $CONF_FILE)
 pushd $PROJECT
