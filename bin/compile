@@ -84,34 +84,13 @@ fi
 if [ "$NAME" = "Python/Django" ]; then
   echo "-----> Django settings injection"
 
-  SETTINGS_FILE=$(ls **/settings.py | head -1)
-  PROJECT=$(dirname $SETTINGS_FILE)
-  echo "Injecting code into $SETTINGS_FILE to read from DATABASE_URL" | indent
+  CONF_FILE=$(find . -name 'conf.py' | head -1)
+  PROJECT=$(dirname $CONF_FILE)
+  pushd $PROJECT
+  make html
+  popd
+  
 
-  cat >>$SETTINGS_FILE <<EOF
-
-import os, sys, urlparse
-urlparse.uses_netloc.append('postgres')
-urlparse.uses_netloc.append('mysql')
-try:
-    if os.environ.has_key('DATABASE_URL') and DATABASES != None:
-        url = urlparse.urlparse(os.environ['DATABASE_URL'])
-        DATABASES['default'] = {
-            'NAME':     url.path[1:],
-            'USER':     url.username,
-            'PASSWORD': url.password,
-            'HOST':     url.hostname,
-            'PORT':     url.port,
-        }
-        if url.scheme == 'postgres':
-            DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql_psycopg2'
-        if url.scheme == 'mysql':
-            DATABASES['default']['ENGINE'] = 'django.db.backends.mysql'
-except:
-    print "Unexpected error:", sys.exc_info()
-
-EOF
-fi
 
 if (grep -Fiq "hg+" requirements.txt) then
   PIP_DOWNLOAD_CACHE=$PIP_DOWNLOAD_CACHE bin/pip install --use-mirrors mercurial | indent
