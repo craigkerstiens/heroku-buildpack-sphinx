@@ -96,8 +96,13 @@ make html
 popd
 
 mkdir -p $CACHE_DIR/.heroku
+echo '123'
 cp -R $SRC_DIR/app $CACHE_DIR/.heroku/
+echo '456'
 cp -R $PROJECT/_build/html/* $CACHE_DIR/.heroku/templates/
+echo '789'
+mv $CACHE_DIR/.heroku . 
+echo '111'
 
 echo "-----> Installing dependencies using pip version $(bin/pip --version | awk '{print $2}')"
 PIP_DOWNLOAD_CACHE=$PIP_DOWNLOAD_CACHE bin/pip install --use-mirrors -r requirements.txt | indent
@@ -111,3 +116,9 @@ OUT=$(virtualenv --relocatable .)
 }
 set -e
 
+# repack cache
+mkdir -p $CACHE_DIR
+for DIR in $APACHE_PATH ; do
+  rm -rf $CACHE_DIR/$DIR
+  cp -R $DIR $CACHE_DIR/$DIR
+done
