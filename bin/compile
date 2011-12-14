@@ -118,3 +118,6 @@ for DIR in $VIRTUALENV_DIRS ; do
   rm -rf $CACHE_DIR/$DIR
   cp -R $DIR $CACHE_DIR/$DIR
 done
+
+echo 'repacked'
+ls $CACHE_DIR
