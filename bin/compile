@@ -96,9 +96,10 @@ make html
 popd
 
 mkdir -p $CACHE_DIR/.heroku
-echo '123'
 cp -R $ROOT_DIR/src/app $CACHE_DIR/.heroku/
-echo '456'
+echo '-------'
+ls $CACHE_DIR/.heroku/
+ls $CACHE_DIR/.heroku/app
 cp -R $PROJECT/_build/html/* $CACHE_DIR/.heroku/app/templates/
 echo '789'
 mv $CACHE_DIR/.heroku . 
