@@ -99,9 +99,6 @@ mkdir -p $CACHE_DIR/.heroku
 cp -R $ROOT_DIR/src/app $CACHE_DIR/.heroku/
 mkdir -p $CACHE_DIR/.heroku/app/templates
 cp -R $PROJECT/_build/html/* $CACHE_DIR/.heroku/app/templates/
-echo '789'
-mv $CACHE_DIR/.heroku . 
-echo '111'
 
 echo "-----> Installing dependencies using pip version $(bin/pip --version | awk '{print $2}')"
 PIP_DOWNLOAD_CACHE=$PIP_DOWNLOAD_CACHE bin/pip install --use-mirrors -r requirements.txt | indent
