@@ -120,6 +120,9 @@ OUT=$(virtualenv --relocatable .)
 }
 set -e
 
+echo $VIRTUALENV_DIRS
+echo '!!!!!!!!!!!'
+
 # repack cache
 mkdir -p $CACHE_DIR
 for DIR in $VIRTUALENV_DIRS ; do
