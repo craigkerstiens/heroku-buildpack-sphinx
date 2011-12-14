@@ -2,7 +2,9 @@
 # bin/release <build-dir>
 
 cat <<EOF
+---
+config_vars:
+  PATH: bin:/usr/local/bin:/usr/bin:/bin
+  PYTHONUNBUFFERED: true
 
-default_process_types:
-  web: python .heroku/app.py 0.0.0.0:$PORT
 EOF
