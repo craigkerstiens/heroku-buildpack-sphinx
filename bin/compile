@@ -95,18 +95,12 @@ pushd $PROJECT
 make html
 popd
 
+rm -rf $CACHE_DIR/.heroku
 mkdir -p $CACHE_DIR/.heroku
 mkdir $ROOT_DIR/src/app/templates
-echo 1
 mv $ROOT_DIR/src/app $CACHE_DIR/.heroku/
-echo 2
 mv $PROJECT/_build/html/* $CACHE_DIR/.heroku/app/templates/
-echo 3
 cp -R $CACHE_DIR/.heroku .
-echo 4
-echo '-----------------'
-ls -al .
-echo '-----------------'
 
 echo "-----> Installing dependencies using pip version $(bin/pip --version | awk '{print $2}')"
 PIP_DOWNLOAD_CACHE=$PIP_DOWNLOAD_CACHE bin/pip install --use-mirrors -r requirements.txt | indent
