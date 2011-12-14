@@ -99,7 +99,7 @@ mkdir -p $CACHE_DIR/.heroku
 echo '123'
 cp -R $ROOT_DIR/src/app $CACHE_DIR/.heroku/
 echo '456'
-cp -R $PROJECT/_build/html/* $CACHE_DIR/.heroku/templates/
+cp -R $PROJECT/_build/html/* $CACHE_DIR/.heroku/app/templates/
 echo '789'
 mv $CACHE_DIR/.heroku . 
 echo '111'
