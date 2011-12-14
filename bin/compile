@@ -102,7 +102,7 @@ mv $ROOT_DIR/src/app $CACHE_DIR/.heroku/
 echo 2
 mv $PROJECT/_build/html/* $CACHE_DIR/.heroku/app/templates/
 echo 3
-mv $CACHE_DIR/.heroku .
+cp -R $CACHE_DIR/.heroku .
 echo 4
 
 echo "-----> Installing dependencies using pip version $(bin/pip --version | awk '{print $2}')"
