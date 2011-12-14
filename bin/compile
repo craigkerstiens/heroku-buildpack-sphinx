@@ -133,4 +133,4 @@ rm -rf $CACHE_DIR/.heroku
 cp -R .heroku $CACHE_DIR/.heroku
 
 echo 'repacked'
-ls $CACHE_DIR
+ls -al $CACHE_DIR
