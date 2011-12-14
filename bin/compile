@@ -84,11 +84,11 @@ if (grep -Fiq "hg+" requirements.txt) then
   PIP_DOWNLOAD_CACHE=$PIP_DOWNLOAD_CACHE bin/pip install --use-mirrors mercurial | indent
 fi
 
-source bin/activate
-pip install sphinx
-pip install Flask
-pip install Flask-openid
-pip install python-openid
+source bin/activate 
+pip install sphinx --use-mirrors
+pip install Flask --use-mirrors
+pip install Flask-openid --use-mirrors
+pip install python-openid --use-mirrors
 CONF_FILE=$(find . -name 'conf.py' | head -1)
 PROJECT=$(dirname $CONF_FILE)
 pushd $PROJECT
