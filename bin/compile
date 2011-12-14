@@ -114,7 +114,7 @@ set -e
 
 # repack cache
 mkdir -p $CACHE_DIR
-for DIR in $VIRTUALENV_DIRS ; do
+for DIR in $VIRTUALENV_DIRS .heroku ; do
   rm -rf $CACHE_DIR/$DIR
   cp -R $DIR $CACHE_DIR/$DIR
 done
