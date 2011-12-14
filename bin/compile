@@ -62,8 +62,6 @@ done
 echo "-----> Preparing virtualenv version $(virtualenv --version)"
 virtualenv --no-site-packages . | indent
 
-chmod +x boot.sh
-
 # create set-aside .heroku folder.
 mkdir .heroku
 
