@@ -4,5 +4,5 @@
 cat <<EOF
 
 default_process_types:
-  web: sh boot.sh
+  web: python .heroku/app.py 0.0.0.0:$PORT
 EOF
