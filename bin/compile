@@ -97,7 +97,7 @@ popd
 
 mkdir -p $CACHE_DIR/.heroku
 cp -R $ROOT_DIR/src/app $CACHE_DIR/.heroku/
-mkdir -P $CACHE_DIR/.heroku/app/templates
+mkdir -p $CACHE_DIR/.heroku/app/templates
 cp -R $PROJECT/_build/html/* $CACHE_DIR/.heroku/app/templates/
 echo '789'
 mv $CACHE_DIR/.heroku . 
