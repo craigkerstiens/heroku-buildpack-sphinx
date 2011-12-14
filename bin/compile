@@ -104,6 +104,9 @@ mv $PROJECT/_build/html/* $CACHE_DIR/.heroku/app/templates/
 echo 3
 cp -R $CACHE_DIR/.heroku .
 echo 4
+echo '-----------------'
+ls -al .
+echo '-----------------'
 
 echo "-----> Installing dependencies using pip version $(bin/pip --version | awk '{print $2}')"
 PIP_DOWNLOAD_CACHE=$PIP_DOWNLOAD_CACHE bin/pip install --use-mirrors -r requirements.txt | indent
