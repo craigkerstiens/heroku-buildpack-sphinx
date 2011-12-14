@@ -4,10 +4,6 @@
 set -eo pipefail
 
 # config
-APACHE_VERSION="2.2.19"
-APACHE_PATH="apache"
-PHP_VERSION="5.3.6"
-PHP_PATH="php"
 LP_DIR=`cd $(dirname $0); cd ..; pwd`
 
 BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
@@ -101,8 +97,7 @@ popd
 
 mkdir -p $CACHE_DIR/.heroku
 cp -R $SRC_DIR/app $CACHE_DIR/.heroku/
-cp -R $PROJECT/_build/html/* $CACHE_DIR/.heroku/templates
-mv $CACHE_DIR/.heroku . 
+cp -R $PROJECT/_build/html/* $CACHE_DIR/.heroku/templates/
 
 echo "-----> Installing dependencies using pip version $(bin/pip --version | awk '{print $2}')"
 PIP_DOWNLOAD_CACHE=$PIP_DOWNLOAD_CACHE bin/pip install --use-mirrors -r requirements.txt | indent
@@ -116,9 +111,3 @@ OUT=$(virtualenv --relocatable .)
 }
 set -e
 
-# repack cache
-mkdir -p $CACHE_DIR
-for DIR in $APACHE_PATH ; do
-  rm -rf $CACHE_DIR/$DIR
-  cp -R $DIR $CACHE_DIR/$DIR
-done
