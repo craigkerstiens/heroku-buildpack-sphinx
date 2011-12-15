@@ -115,9 +115,6 @@ OUT=$(virtualenv --relocatable .)
 }
 set -e
 
-echo $VIRTUALENV_DIRS
-echo '!!!!!!!!!!!'
-
 # repack cache
 mkdir -p $CACHE_DIR
 for DIR in $VIRTUALENV_DIRS ; do
@@ -127,5 +124,3 @@ done
 rm -rf $CACHE_DIR/.heroku
 cp -R .heroku $CACHE_DIR/.heroku
 
-echo 'repacked'
-ls -al $CACHE_DIR
