@@ -81,8 +81,10 @@ then
     cd ..
 fi
 
-if (grep -Fiq "hg+" requirements.txt) then
-  PIP_DOWNLOAD_CACHE=$PIP_DOWNLOAD_CACHE bin/pip install --use-mirrors mercurial | indent
+if [ -f requirements.txt ]; then
+  if (grep -Fiq "hg+" requirements.txt) then
+    PIP_DOWNLOAD_CACHE=$PIP_DOWNLOAD_CACHE bin/pip install --use-mirrors mercurial | indent
+  fi
 fi
 
 source bin/activate 
@@ -103,7 +105,8 @@ mv $ROOT_DIR/src/app $CACHE_DIR/.heroku/
 mv $PROJECT/_build/html/* $CACHE_DIR/.heroku/app/templates/
 cp -R $CACHE_DIR/.heroku .
 
-if -a requirements.txt then
+if [ -f requirements.txt ]; 
+then
   echo "-----> Installing dependencies using pip version $(bin/pip --version | awk '{print $2}')"
   PIP_DOWNLOAD_CACHE=$PIP_DOWNLOAD_CACHE bin/pip install --use-mirrors -r requirements.txt | indent
 fi
