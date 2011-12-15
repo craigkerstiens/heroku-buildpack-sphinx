@@ -6,6 +6,7 @@ from flask import Flask, render_template, request, g, session, flash, \
 from flaskext.openid import OpenID
 
 app = Flask(__name__)
+app.secret_key = '\xa5\x10\xbfN3\x1f\t\xd0ec\xa1\xe8\xe7B\x1dU4!\xa1N@\xcf\xfe\xa2'
 
 oid = OpenID(app)
 
