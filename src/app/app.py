@@ -36,7 +36,8 @@ def requires_auth(f):
 @app.route('/login', methods=['GET', 'POST'])
 @oid.loginhandler
 def login():
-    return oid.try_login("https://www.google.com/accounts/o8/site-xrds?hd=heroku.com")
+    domain = os.environ['DOMAIN']
+    return oid.try_login("https://www.google.com/accounts/o8/site-xrds?hd=%s" % domain )
 
 @oid.after_login
 def create_or_login(resp):
@@ -71,4 +72,11 @@ def stuff(filename):
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port)
+    if 'DEBUG' in os.environ:
+        if os.environ['DEBUG'] == 'True':
+            DEBUG=True
+        else:
+            DEBUG=False
+    else:
+        DEBUG = False
+    app.run(debug=DEBUG, host='0.0.0.0', port=port)
