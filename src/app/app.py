@@ -69,7 +69,7 @@ def stuff(filename):
         return render_template(filename + ".html")
     elif filename.find(".html") != -1:
         return render_template(filename)
-    return send_from_directory('templates', filename)
+    return send_from_directory('.heroku/app/templates', filename)
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
