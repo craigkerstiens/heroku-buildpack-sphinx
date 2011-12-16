@@ -18,6 +18,9 @@ def before_request():
 
 def check_auth():
     if 'DOMAIN' in os.environ:
+        print '123456789'
+        print session
+        print session['openid']
         if 'openid' in session:
             return True
         return False
