@@ -28,7 +28,7 @@ def check_auth():
         return True
         
 @oid.errorhandler()
-def stuffs(resp):
+def stuffs(self, resp):
     print resp
     print qwerty
 
