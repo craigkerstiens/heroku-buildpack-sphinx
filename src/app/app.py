@@ -20,12 +20,17 @@ def check_auth():
     if 'DOMAIN' in os.environ:
         print '123456789'
         print session
-        print session['openid']
+        print session['openid'] 
         if 'openid' in session:
             return True
         return False
     else:
         return True
+        
+@oid.errorhandler()
+def stuffs(resp):
+    print resp
+    print qwerty
 
 def requires_auth(f):
     @wraps(f)
