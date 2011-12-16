@@ -47,6 +47,7 @@ def create_or_login(resp):
     This function has to redirect otherwise the user will be presented
     with a terrible URL which we certainly don't want.
     """
+    print '!!!!!!'
     print resp
     session['openid'] = resp.identity_url
     return redirect(oid.get_next_url())
