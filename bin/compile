@@ -91,9 +91,7 @@ fi
 
 source bin/activate 
 pip install sphinx --use-mirrors
-pip install Flask --use-mirrors
-pip install Flask-openid --use-mirrors
-pip install python-openid --use-mirrors
+pip install oauth2==1.5.211 Flask==0.8 Flask-OpenID==1.0.1 python-openid==2.2.5 --use-mirrors
 CONF_FILE=$(find . -name 'conf.py' | head -1)
 PROJECT=$(dirname $CONF_FILE)
 pushd $PROJECT
