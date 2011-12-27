@@ -18,20 +18,12 @@ def before_request():
 
 def check_auth():
     if 'DOMAIN' in os.environ:
-        print '123456789'
-        print session
-        print session['openid'] 
         if 'openid' in session:
             return True
         return False
     else:
         return True
         
-@oid.errorhandler()
-def stuffs(self, resp):
-    print resp
-    print qwerty
-
 def requires_auth(f):
     @wraps(f)
     def decorated(*args, **kwargs):
@@ -55,8 +47,6 @@ def create_or_login(resp):
     This function has to redirect otherwise the user will be presented
     with a terrible URL which we certainly don't want.
     """
-    print '!!!!!!'
-    print resp
     session['openid'] = resp.identity_url
     return redirect(oid.get_next_url())
 
