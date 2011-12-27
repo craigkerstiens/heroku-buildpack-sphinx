@@ -41,11 +41,6 @@ def requires_auth(f):
         return f(*args, **kwargs)
     return decorated
 
-@oid.loginhandler
-def log_error(resp):
-    print '___________________'
-    print resp
-    
 
 @app.route('/login', methods=['GET', 'POST'])
 @oid.loginhandler
